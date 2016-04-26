@@ -2,13 +2,13 @@
 bin/
 include/
 lib/
-lib64/
 
 #especific files
+lib64
 ez_setup.py
 
 #files extensions
-.pyc
-.swp
-.zip
-.json
+*.pyc
+*.swp
+*.zip
+*.json
