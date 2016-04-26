@@ -1,0 +1,14 @@
+#especific folders
+bin/
+include/
+lib/
+lib64/
+
+#especific files
+ez_setup.py
+
+#files extensions
+.pyc
+.swp
+.zip
+.json
