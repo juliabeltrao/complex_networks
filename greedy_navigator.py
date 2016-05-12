@@ -1,65 +1,66 @@
 import networkx as nx
-import matplotlib.pyplot as plt
 import numpy as np
 
+# performs a greedy navigation in the network represented by graph G 
+# from source node s to target node t
 def greedy_navigator(G, s, t):
 
-	visited=[]	
-	neighborsList=[]
+	# list to keep track of which nodes were visited 
+	visited=[s]	
+	# list to keep track of the path found by the navigator
 	path=[s]
+
 	i = s
+
+	# coordinates of the target node
 	pt = [G.node[t]['xpos'], G.node[t]['ypos']]	
 
+	# until target node is reached
 	while(i != t):
 
+		# list to keep track of the neighbours of the current node i
+		neighborsList=[]
+		# coordinates of the current node
 		pi = [G.node[i]['xpos'], G.node[i]['ypos']]			
 
+		# for all neighbors of the current node
 		for j in G.neighbors(i):
+			# if neighbor j has not been visited 
 			if(j not in visited):
+				# mark neighbor j as visited
 				visited.append(j)
-				
+			
+				# if neighbor j is the target node t	
 				if(j == t):
 					neighbor = -1, j
+				# else if j is not t
 				else:
+					# coordinates of neighbor node j
 					pj = [G.node[j]['xpos'], G.node[j]['ypos']]			
+					# calculate angle between the vectors vij and vit
 					neighbor = calculate_angle(pi, pj, pt), j
 
+				# add neighbor j to list of neighbors of i
 				neighborsList.append(neighbor)
 
+		# retrieve the neighbor with the smallest angle
 		min_angle = min(neighborsList)
+		# continue the search from this neighbor
 		i = min_angle[1]		
+		# add this neighbor to path
 		path.append(i)
 
 	return path
 
 def calculate_angle(p1, p2, p3):
 			
+	# vector defined by points p1 and p2
 	v12 = np.array(p1) - np.array(p2)
+	# vector defined by points p1 and p3
 	v13 = np.array(p1) - np.array(p3)
 
+	# calculate angle between vectors v12 and v13
 	angle = np.math.atan2(np.linalg.det([v12,v13]),np.dot(v12,v13))
 	
-	#return abs(np.degrees(angle))
+	# return absolute value of the angle
 	return abs(angle)
-
-if __name__ == "__main__":
-
-	G = nx.Graph()
-
-	G.add_node(1, xpos=-1, ypos=-1)
-	G.add_node(2, xpos=1, ypos=-1)
-	G.add_node(3, xpos=0, ypos=0)
-	G.add_node(4, xpos=0, ypos=1)
-	G.add_node(5, xpos=0, ypos=2)
-
-	G.add_edges_from([(1,3), (2,3), (3,4), (4,5)])
-
-	nx.draw(G)
-
-	plt.savefig("simple_graph.png")
-
-	
-
-	print greedy_navigator(G, 1, 5)
-
-	
