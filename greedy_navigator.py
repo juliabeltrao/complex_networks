@@ -13,7 +13,8 @@ def greedy_navigator(G, s, t):
 	i = s
 
 	# coordinates of the target node
-	pt = [G.node[t]['xpos'], G.node[t]['ypos']]	
+	#pt = [G.node[t]['lon'], G.node[t]['lat']]	
+	pt = map_projection(G.node[t]['lat'], G.node[t]['lon'])	
 
 	# until target node is reached
 	while(i != t):
@@ -21,7 +22,8 @@ def greedy_navigator(G, s, t):
 		# list to keep track of the neighbours of the current node i
 		neighborsList=[]
 		# coordinates of the current node
-		pi = [G.node[i]['xpos'], G.node[i]['ypos']]			
+		#pi = [G.node[i]['lon'], G.node[i]['lat']]			
+		pi = map_projection(G.node[i]['lat'], G.node[i]['lon'])			
 
 		# for all neighbors of the current node
 		for j in G.neighbors(i):
@@ -36,7 +38,8 @@ def greedy_navigator(G, s, t):
 				# else if j is not t
 				else:
 					# coordinates of neighbor node j
-					pj = [G.node[j]['xpos'], G.node[j]['ypos']]			
+					#pj = [G.node[j]['lon'], G.node[j]['lat']]			
+					pj = map_projection(G.node[j]['lat'], G.node[j]['lon'])			
 					# calculate angle between the vectors vij and vit
 					neighbor = calculate_angle(pi, pj, pt), j
 
@@ -53,7 +56,7 @@ def greedy_navigator(G, s, t):
 	return path
 
 def calculate_angle(p1, p2, p3):
-			
+	
 	# vector defined by points p1 and p2
 	v12 = np.array(p1) - np.array(p2)
 	# vector defined by points p1 and p3
@@ -64,3 +67,12 @@ def calculate_angle(p1, p2, p3):
 	
 	# return absolute value of the angle
 	return abs(angle)
+
+def map_projection(lat, lon):
+
+	x = R * lon
+	y = R * math.log(math.tan((math.pi/4) + (lat/2)))
+
+	proj = [x, y]
+
+	return proj
