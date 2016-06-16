@@ -1,5 +1,9 @@
 import networkx as nx
 import numpy as np
+import math
+
+EARTH_RADIUS = 6378137.0
+PI = 3.14159265359
 
 # performs a greedy navigation in the network represented by graph G 
 # from source node s to target node t
@@ -70,8 +74,8 @@ def calculate_angle(p1, p2, p3):
 
 def map_projection(lat, lon):
 
-	x = R * lon
-	y = R * math.log(math.tan((math.pi/4) + (lat/2)))
+	x = EARTH_RADIUS * lon
+	y = EARTH_RADIUS * math.log(math.tan((PI/4.0) + (lat/2.0)))
 
 	proj = [x, y]
 
