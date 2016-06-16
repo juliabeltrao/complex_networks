@@ -1,16 +1,22 @@
+import sys
+import math
 import networkx as nx
 import matplotlib.pyplot as plt
 from greedy_navigator import greedy_navigator
+from oracle_navigator import oracle_navigator
 
-def test1():
+R= 6378137.0
+PI = 3.14159265359
+
+def test1(alg, s, t):
 
 	G = nx.Graph()
 
-	G.add_node(1, xpos=-1, ypos=-1)
-	G.add_node(2, xpos=1, ypos=-1)
-	G.add_node(3, xpos=0, ypos=0)
-	G.add_node(4, xpos=0, ypos=1)
-	G.add_node(5, xpos=0, ypos=2)
+	G.add_node(1, lon=-1/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(-1/-R))))
+	G.add_node(2, lon=1/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(-1/-R))))
+	G.add_node(3, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(0/-R))))
+	G.add_node(4, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(1/-R))))
+	G.add_node(5, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(2/-R))))
 
 	G.add_edges_from([(1,3), (2,3), (3,4), (4,5)])
 
@@ -19,21 +25,29 @@ def test1():
 	plt.savefig("test1.png")
 	plt.close()
 
-	path = greedy_navigator(G, 1, 5)
+	if(alg == "greedy"):
+		path = greedy_navigator(G, s, t)
+	elif(alg == "oracle"):
+		path = oracle_navigator(G, s, t)
+	else:
+		sys.stderr.write("Algorithms supported are: greedy and oracle.")
+		sys.exit(1)
+
+	#path = greedy_navigator(G, 1, 5)
 
 	return path
 
-def test2():
+def test2(alg, s, t):
 
 	G = nx.Graph()
 
-	G.add_node(1, xpos=-1, ypos=-1)
-	G.add_node(2, xpos=1, ypos=-1)
-	G.add_node(3, xpos=0, ypos=0)
-	G.add_node(4, xpos=0, ypos=1)
-	G.add_node(5, xpos=0, ypos=2)
-	G.add_node(6, xpos=-2, ypos=1)
-	G.add_node(7, xpos=2, ypos=1)
+	G.add_node(1, lon=-1/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(-1/-R))))
+	G.add_node(2, lon=1/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(-1/-R))))
+	G.add_node(3, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(0/-R))))
+	G.add_node(4, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(1/-R))))
+	G.add_node(5, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(2/-R))))
+	G.add_node(6, lon=-2/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(1/-R))))
+	G.add_node(7, lon=2/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(1/-R))))
 
 	G.add_edges_from([(1,3), (2,3), (3,4), (4,5), (1,2), (1,6), (2,7), (3,6), (3,7), (4,6), (4,7), (6,5), (7,5)])
 
@@ -42,23 +56,31 @@ def test2():
 	plt.savefig("test2.png")
 	plt.close()
 
-	path = greedy_navigator(G, 1, 5)
+	if(alg == "greedy"):
+		path = greedy_navigator(G, s, t)
+	elif(alg == "oracle"):
+		path = oracle_navigator(G, s, t)
+	else:
+		sys.stderr.write("Algorithms supported are: greedy and oracle.")
+		sys.exit(1)
+
+	#path = greedy_navigator(G, 1, 5)
 
 	return path
 
-def test3():
+def test3(alg, s, t):
 
 	G = nx.Graph()
 
-	G.add_node(0, xpos=0, ypos=0)
-	G.add_node(1, xpos=0, ypos=1)
-	G.add_node(2, xpos=1, ypos=0)
-	G.add_node(3, xpos=0, ypos=-1)
-	G.add_node(4, xpos=-1, ypos=0)
-	G.add_node(5, xpos=0, ypos=2)
-	G.add_node(6, xpos=2, ypos=0)
-	G.add_node(7, xpos=0, ypos=-2)
-	G.add_node(8, xpos=-2, ypos=0)
+	G.add_node(0, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(0/-R))))
+	G.add_node(1, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(1/-R))))
+	G.add_node(2, lon=1/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(0/-R))))
+	G.add_node(3, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(-1/-R))))
+	G.add_node(4, lon=-1/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(0/-R))))
+	G.add_node(5, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(2/-R))))
+	G.add_node(6, lon=2/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(0/-R))))
+	G.add_node(7, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(-2/-R))))
+	G.add_node(8, lon=-2/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(0/-R))))
 
 	G.add_edges_from([(0,1), (0,2), (0,3), (0,4), (1,5), (2,6), (3,7), (4,8), (1,2), (2,3), (3,4), (4,1)])
 
@@ -67,11 +89,16 @@ def test3():
 	plt.savefig("test3.png")
 	plt.close()
 
-	path1 = greedy_navigator(G, 7, 5)
-	path2 = greedy_navigator(G, 7, 8)
+	if(alg == "greedy"):
+		path = greedy_navigator(G, s, t)
+	elif(alg == "oracle"):
+		path = oracle_navigator(G, s, t)
+	else:
+		sys.stderr.write("Algorithms supported are: greedy and oracle.")
+		sys.exit(1)
 
-	return (path1, path2)	
+	#path1 = greedy_navigator(G, 7, 5)
+	#path2 = greedy_navigator(G, 7, 8)
 
+	return path	
 
-if __name__ == "__main__":
-	test3()
