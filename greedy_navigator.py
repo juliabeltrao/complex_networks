@@ -1,3 +1,4 @@
+import pdb; pdb.set_trace()
 import networkx as nx
 import numpy as np
 import math
@@ -74,8 +75,8 @@ def calculate_angle(p1, p2, p3):
 
 def map_projection(lat, lon):
 
-	x = EARTH_RADIUS * lon
-	y = EARTH_RADIUS * math.log(math.tan((PI/4.0) + (lat/2.0)))
+	x = EARTH_RADIUS * math.radians(lon)
+	y = EARTH_RADIUS * math.log(math.tan((PI/4.0) + (math.radians(lat)/2.0)))
 
 	proj = [x, y]
 
