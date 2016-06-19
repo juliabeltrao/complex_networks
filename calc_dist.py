@@ -1,5 +1,5 @@
 import networkx as nx
-from math import sqrt
+import math
 
 TORADIANS = 3.141592653589793 / 180.
 EARTH_RADIUS = 6378137.
@@ -10,7 +10,7 @@ def total_distance(G, path):
 	n1 = path[0]
 
 	for n2 in path[1:]:
-		d = wgs84_dist(G.node[n1]['lat'], G.node[n1]['lon'], G.node[n2]['lat'], G.node[n2]['lon']) 
+		d = wgs84_distance(G.node[n1]['lat'], G.node[n1]['lon'], G.node[n2]['lat'], G.node[n2]['lon']) 
 		dist = dist + d
 		n1 = n2
 
@@ -22,8 +22,7 @@ def wgs84_distance(lat1, lon1, lat2, lon2):
 	dLat = math.radians(lat2 - lat1)
 	dLon = math.radians(lon2 - lon1)
 
-	a
-	 = (math.sin(dLat / 
+	a = (math.sin(dLat / 
 	2) * math.sin(dLat / 
 	2) +
 	math.cos(math.radians(lat1))
