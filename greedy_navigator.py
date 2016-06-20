@@ -1,4 +1,4 @@
-import pdb; pdb.set_trace()
+#import pdb; pdb.set_trace()
 import networkx as nx
 import numpy as np
 import math
@@ -11,9 +11,9 @@ PI = 3.14159265359
 def greedy_navigator(G, s, t):
 
 	# list to keep track of which nodes were visited 
-	visited=[s]	
+	visited=[]	
 	# list to keep track of the path found by the navigator
-	path=[s]
+	path=[]
 
 	i = s
 
@@ -35,7 +35,7 @@ def greedy_navigator(G, s, t):
 			# if neighbor j has not been visited 
 			if(j not in visited):
 				# mark neighbor j as visited
-				visited.append(j)
+				#visited.append(j)
 			
 				# if neighbor j is the target node t	
 				if(j == t):
@@ -51,12 +51,18 @@ def greedy_navigator(G, s, t):
 				# add neighbor j to list of neighbors of i
 				neighborsList.append(neighbor)
 
-		# retrieve the neighbor with the smallest angle
-		min_angle = min(neighborsList)
-		# continue the search from this neighbor
-		i = min_angle[1]		
-		# add this neighbor to path
-		path.append(i)
+		if(i not in visited):
+			visited.append(i)
+
+		if len(neighborsList):
+			# add this neighbor to path
+			path.append(i)
+			# retrieve the neighbor with the smallest angle
+			min_angle = min(neighborsList)
+			# continue the search from this neighbor
+			i = min_angle[1]		
+		else:
+			i = path.pop()
 
 	return path
 
