@@ -123,4 +123,4 @@ def toy_us_grid_city(alg, s, t):
 
 def inv_projection(y):
 
-	return (PI/2.0)-(2.0*math.atan(math.exp(-y/R)))
+	return math.degrees((PI/2.0)-(2.0*math.atan(math.exp(-y/R))))

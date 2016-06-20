@@ -12,11 +12,11 @@ def test1(alg, s, t):
 
 	G = nx.Graph()
 
-	G.add_node(1, lon=-1/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(-1/-R))))
-	G.add_node(2, lon=1/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(-1/-R))))
-	G.add_node(3, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(0/-R))))
-	G.add_node(4, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(1/-R))))
-	G.add_node(5, lon=0/R, lat=(PI/2.0)-(2.0*math.atan(math.exp(2/-R))))
+	G.add_node(1, lon=-1/R, lat=inv_projection(-1))
+	G.add_node(2, lon=1/R, lat=inv_projection(-1))
+	G.add_node(3, lon=0/R, lat=inv_projection(0))
+	G.add_node(4, lon=0/R, lat=inv_projection(1))
+	G.add_node(5, lon=0/R, lat=inv_projection(2))
 
 	G.add_edges_from([(1,3), (2,3), (3,4), (4,5)])
 
@@ -102,3 +102,5 @@ def test3(alg, s, t):
 
 	return path	
 
+def inv_projection(y):
+	return math.degrees((PI/2.0)-(2.0*math.atan(math.exp(-y/R))))
