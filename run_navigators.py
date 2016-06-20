@@ -13,16 +13,15 @@ def run_navigator(network, navigator, source, target, output):
 	
 	dist = total_distance(network, path)
 
-	out = "\n" + "path: " + path + "\n" + "total distance: " + dist + "\n"
+	out = "path: " + path + "\n" + "total distance: " + dist + "\n"
 
 	if output:
 		f = open(output, 'a')
 		f.write(out)
-		#f.write(args.data + "\n")
-		#f.write("path: " + path + "\n")
-		#f.write("total distance: " + dist + "\n")
 	else:
 		print out
+
+	return dist
 
 if __name__ = "__main__":
 
@@ -40,4 +39,3 @@ if __name__ = "__main__":
 	net = pickle.load(open(net_file))
 
 	run_navigator(net, args.navigator, tuple(args.source), tuple(args.target), args.output)
-	
