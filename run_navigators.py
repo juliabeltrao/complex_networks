@@ -1,39 +1,43 @@
 import pickle 
-import argparse
 from oracle_navigator import oracle_navigator
 from greedy_navigator import greedy_navigator
 from calc_dist import total_distance
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-n", "--navigator", choices=["oracle", "greedy"], help="Specifies the navigator used.")
-parser.add_argument("-d", "--data", choices=["budapest", "chicago", "des_moines", "helsinki", "rome", "san_francisco", "san_jose"], help="Specifies the data set used.")
-parser.add_argument("-s", "--source", nargs='+', type=int, help="Specifies source node")
-parser.add_argument("-t", "--target", nargs='+', type=int, help="Specifies target node")
-parser.add_argument("-o", "--output", help="If specified, results are saved to this file. Otherwise they are printed on the screen.")
-args = parser.parse_args()
+def run_navigator(network, navigator, source, target, output):
+	
+	if navigator == "oracle":
+		path = oracle_navigator(network, source, target)
 
-net_file = "networks_with_edges/" + args.data + "_100.pickle"
-net = pickle.load(open(net_file))
+	elif navigator == "greedy":
+		path = greedy_navigator(network, source, target)
+	
+	dist = total_distance(network, path)
 
-source = tuple(args.source)
-target = tuple(args.target)
+	out = "\n" + "path: " + path + "\n" + "total distance: " + dist + "\n"
 
-if args.navigator == "oracle":
-	path = oracle_navigator(net, source, target)
-	dist = total_distance(net, path)
+	if output:
+		f = open(output, 'a')
+		f.write(out)
+		#f.write(args.data + "\n")
+		#f.write("path: " + path + "\n")
+		#f.write("total distance: " + dist + "\n")
+	else:
+		print out
 
-elif args.navigator == "greedy":
-	path = greedy_navigator(net, source, target)
-	dist = total_distance(net, path)
+if __name__ = "__main__":
 
-output = args.data + "\n" + "path: " + str(path) + "\n" + "total distance: " + str(dist) + "\n"
+	import argparse
 
-if args.output:
-	f = open(args.output, 'a')
-	f.write(output)
-	#f.write(args.data + "\n")
-	#f.write("path: " + path + "\n")
-	#f.write("total distance: " + dist + "\n")
-else:
-	print output
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-n", "--navigator", choices=["oracle", "greedy"], help="Specifies the navigator used.")
+	parser.add_argument("-d", "--data", choices=["budapest", "chicago", "des_moines", "helsinki", "rome", "san_francisco", "san_jose"], help="Specifies the data set used.")
+	parser.add_argument("-s", "--source", nargs="+", type=int, help="Specifies source node")
+	parser.add_argument("-t", "--target", nargs="+", type=int, help="Specifies target node")
+	parser.add_argument("-o", "--output", help="If specified, results are saved to this file. Otherwise they are printed on the screen.")
+	args = parser.parse_args()
 
+	net_file = "networks_with_edges/" + args.data + "_100.pickle"
+	net = pickle.load(open(net_file))
+
+	run_navigator(net, args.navigator, tuple(args.source), tuple(args.target), args.output)
+	
