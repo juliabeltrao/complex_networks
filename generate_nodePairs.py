@@ -1,12 +1,20 @@
 #import pdb; pdb.set_trace()
 import random as rd
 import networkx as nx
+import matplotlib.pyplot as plt
 from run_navigators import run_navigator
 
 def plot_graph(network):
 
 	data = zip(collect_data(network))
 	data.sort()
+	
+	# plotting identity line
+	plt.plot(x, x)
+
+	# plotting oracle x greedy
+	oracle_dist, greedy_dist = zip(*data) 
+	plt.plot()
 	
 
 def collect_data(netowrk):
