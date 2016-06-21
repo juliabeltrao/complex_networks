@@ -15,6 +15,12 @@ class TestGreedyNavigator(unittest.TestCase):
 	def test_graph4(self):
 		self.assertEqual(tests.test3('greedy', 7, 8), [7,3,4,8])
 
+	def test_graph5(self):
+		self.assertEqual(tests.test4('greedy', 1, 5), [1,3,4,6,5])
+
+	def test_graph6(self):
+		self.assertEqual(tests.test5('greedy', 1, 5), [1,3,6,5])
+
 if __name__ == "__main__":
 	unittest.main()
 	
