@@ -38,15 +38,15 @@ def greedy_navigator(G, s, t):
 				#visited.append(j)
 			
 				# if neighbor j is the target node t	
-				if(j == t):
-					neighbor = -1, j
+				# if(j == t):
+					#neighbor = 0, j
 				# else if j is not t
-				else:
+				# else:
 					# coordinates of neighbor node j
 					#pj = [G.node[j]['lon'], G.node[j]['lat']]			
-					pj = map_projection(G.node[j]['lat'], G.node[j]['lon'])			
+				pj = map_projection(G.node[j]['lat'], G.node[j]['lon'])			
 					# calculate angle between the vectors vij and vit
-					neighbor = calculate_angle(pi, pj, pt), j
+				neighbor = calculate_angle(pi, pj, pt), j
 
 				# add neighbor j to list of neighbors of i
 				neighborsList.append(neighbor)
@@ -64,6 +64,8 @@ def greedy_navigator(G, s, t):
 		else:
 			i = path.pop()
 
+	path.append(t)
+	
 	return path
 
 def calculate_angle(p1, p2, p3):
