@@ -50,7 +50,7 @@ def generate_pairs(G):
 	N = len(G.nodes())
 	i=0
 
-	while i < 2*N:
+	while i < N/2:
 		s = rd.randrange(0, N-1)
 		t = rd.randrange(0, N-1)
 		while (s == t or not nx.has_path(G, G.nodes()[s], G.nodes()[t])):

@@ -88,7 +88,7 @@ def toy_us_grid_city():
 	G.add_node(38, lon=l, lat=inv_projection(4))
 	G.add_node(39, lon=l, lat=inv_projection(5))
 	G.add_node(40, lon=l, lat=inv_projection(6))
-	G.add_edges_from([(34,35), (35,36), (36,37), (37,38), (39,40), (40,41)])
+	G.add_edges_from([(34,35), (35,36), (36,37), (37,38), (38,39), (39,40)])
 
 	l=6/R
 	G.add_node(41, lon=l, lat=inv_projection(1))
