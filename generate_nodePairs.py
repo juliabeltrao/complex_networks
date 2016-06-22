@@ -1,4 +1,5 @@
 #import pdb; pdb.set_trace()
+import math
 import random as rd
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -8,13 +9,16 @@ def plot_graph(network):
 
 	data = zip(collect_data(network))
 	data.sort()
+	oracle_dist, greedy_dist = zip(*data) 
 	
 	# plotting identity line
-	plt.plot(x, x)
+	x = [0, math.ceil(max(max(oracle_dist), max(greedy_dist)))]
+	plt.plot(x, x, 'b-')
 
 	# plotting oracle x greedy
-	oracle_dist, greedy_dist = zip(*data) 
-	plt.plot()
+	plt.xlabel("oracle distance")
+	plt.ylabel("greedy distance")
+	plt.plot(oracle_dist, greedy_dist, 'ro')
 	
 
 def collect_data(netowrk):
@@ -36,7 +40,7 @@ def generate_pairs(G):
 	N = len(G.nodes())
 	i=0
 
-	while i < 5:
+	while i < N/2:
 		s = rd.randrange(0, N-1)
 		t = rd.randrange(0, N-1)
 		while s == t:
