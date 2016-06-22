@@ -13,17 +13,15 @@ def run_navigator(network, navigator, source, target, output):
 	
 	dist = total_distance(network, path)
 
-	out = "path: " + path + "\n" + "total distance: " + dist + "\n"
+	out = "path: " + str(path) + "\n" + "total distance: " + str(dist) + "\n"
 
 	if output:
 		f = open(output, 'a')
 		f.write(out)
-	else:
-		print out
 
 	return dist
 
-if __name__ = "__main__":
+if __name__ == "__main__":
 
 	import argparse
 

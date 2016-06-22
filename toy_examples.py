@@ -1,6 +1,8 @@
 # This file defines some toy examples based on real cities
 
 import networkx as nx
+import pickle
+import math
 import sys 
 
 R= 6378137.0
@@ -28,17 +30,7 @@ def toy_moscow(alg, s, t):
 	# Connections between rings
 	
 	
-	if(alg == "greedy"):
-		path = greedy_navigator(G, s, t)
-	elif(alg == "oracle"):
-		path = oracle_navigator(G, s, t)
-	else
-		sys.stderr.write("Algorithms supported are: greedy and oracle.")
-		sys.exit(1)
-
-	return path
-
-def toy_us_grid_city(alg, s, t):
+def toy_us_grid_city():
 
 	G = nx.Graph()
 
@@ -99,7 +91,7 @@ def toy_us_grid_city(alg, s, t):
 	G.add_edges_from([(34,35), (35,36), (36,37), (37,38), (39,40), (40,41)])
 
 	l=6/R
-	G.add_node(41, lon=l, lat=inv_porjection(1))
+	G.add_node(41, lon=l, lat=inv_projection(1))
 	G.add_node(42, lon=l, lat=inv_projection(2))
 	G.add_node(43, lon=l, lat=inv_projection(3))
 	G.add_node(44, lon=l, lat=inv_projection(4))
@@ -111,15 +103,9 @@ def toy_us_grid_city(alg, s, t):
 	G.add_edges_from([(4,10), (10,17), (17,24), (24,31), (31,38), (38,44)])
 	G.add_edges_from([(5,11), (11,18), (18,25), (25,32), (32,39), (39,45)])
 
-	if(alg == "greedy"):
-		path = greedy_navigator(G, s, t)
-	elif(alg == "oracle"):
-		path = oracle_navigator(G, s, t)
-	else
-		sys.stderr.write("Algorithms supported are: greedy and oracle.")		
-		sys.exit(1)
+	f = open("toy_networks/toy_lattice.pickle", 'wb')
 
-	return path
+	pickle.dump(G, f)
 
 def inv_projection(y):
 
