@@ -17,7 +17,7 @@ def distance(network, n1, n2):
 	lat1 = network.node[n1]['lat']
 	lon1 = network.node[n1]['lon']
 	lat2 = network.node[n2]['lat']
-	lon2 = network.node[n1]['lon']
+	lon2 = network.node[n2]['lon']
 
 	dist = wgs84_distance(lat1, lon1, lat2, lon2)
 
