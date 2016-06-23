@@ -1,4 +1,5 @@
 import pickle
+import networkx as nx
 from generate_nodePairs import plot_graph
 from draw_graph import draw_network
 
@@ -11,8 +12,8 @@ cities_networks = ["des_moines_100.pickle", "budapest_100.pickle", "chicago_100.
 	#network = pickle.load(open(f))
 	#draw_network(network, None)
 
-for network in cities_networks:
-	f = "networks_with_edges/" + network
-	network = pickle.load(open(f))
-	f = f.replace("pickle", "png")
-	draw_network(network, f)
+for city in cities_networks:
+	fi = "networks_with_edges/" + city
+	network = pickle.load(open(fi))
+	fo = "images/" + city.replace("pickle", "png")
+	draw_network(network, fo)

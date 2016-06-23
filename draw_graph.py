@@ -5,16 +5,18 @@ from greedy_navigator import map_projection
 
 def draw_network(network, output):
         
-	plt.figure()
+	components = sorted(nx.connected_components(network), key = len)
+	largest_comp = components.pop()
+
 	pos={}
-	for n in network.nodes():
+	for n in largest_comp:
 		pos[n] = np.array(map_projection(network.node[n]['lat'], network.node[n]['lon']))
 
-	nx.draw(network, pos)
+	nx.draw_networkx(network, pos=pos, nodelist=largest_comp, node_size=100)
 	
 	plt.show()
-
+	
 	if output:
 		plt.savefig(output)
-	else:
-		plt.show()
+
+	plt.close()
