@@ -10,7 +10,8 @@ def total_distance(G, path):
 	n1 = path[0]
 
 	for n2 in path[1:]:
-		d = wgs84_distance(G.node[n1]['lat'], G.node[n1]['lon'], G.node[n2]['lat'], G.node[n2]['lon']) 
+		#d = wgs84_distance(G.node[n1]['lat'], G.node[n1]['lon'], G.node[n2]['lat'], G.node[n2]['lon']) 
+		d = G[n1][n2]['dist']
 		dist = dist + d
 		n1 = n2
 
