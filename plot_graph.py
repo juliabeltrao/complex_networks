@@ -1,9 +1,11 @@
 #import pdb; pdb.set_trace()
 import sys
 import math
+import numpy as np
 import random as rd
 import networkx as nx
 import matplotlib.pyplot as plt
+from scipy.stats import binned_statistic
 from oracle_navigator import oracle_navigator
 from greedy_navigator import greedy_navigator
 
@@ -18,16 +20,25 @@ def plot_graph(network, output):
 	#print "\ndata", data
 	#sys.exit()
 	oracle_dist, greedy_dist = zip(*data) 
+	#oracle_dist = list(oracle_dist)
+	#greedy_dist = list(greedy_dist)
 	
 	# plotting identity line
-	x = [0, math.ceil(max(max(oracle_dist), max(greedy_dist)))]
+	xymax = math.ceil(max(max(oracle_dist), max(greedy_dist))) + 100
+	x = [0, xymax]
 	plt.plot(x, x, 'k--')
 
 	# plotting oracle x greedy
 	plt.xlabel("oracle distance")
 	plt.ylabel("greedy distance")
-	plt.plot(oracle_dist, greedy_dist, 'ro')
-	plt.axis([0, max(oracle_dist), 0, max(greedy_dist)])
+	plt.plot(oracle_dist, greedy_dist, 'b.')
+	plt.axis([0, xymax, 0, xymax])
+
+	n_bins = 20
+	bin_centers, _, _ = binned_statistic(np.array(oracle_dist), np.array(oracle_dist), statistic='mean', bins=n_bins)
+	bin_averages, _, _ = binned_statistic(np.array(oracle_dist), np.array(greedy_dist), statistic='mean', bins=n_bins)
+	#bin_stdevs, _, _ = binned_statistic(np.array(oracle_dist), np.array(greedy_dist), statistic='std', bins=n_bins)
+	plt.plot(bin_centers, bin_averages, 'ro', ls='solid')
 
 	if output:
 		plt.savefig(output)
@@ -35,6 +46,9 @@ def plot_graph(network, output):
 		plt.show()
 		
 	plt.close()
+
+	return (bin_centers, bin_averages)
+
 def collect_data(network):
 
 	oracle_dist=[]

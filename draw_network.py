@@ -19,6 +19,7 @@ def draw_network(network, output):
 
 	#nx.draw_networkx(network, pos=pos, with_labels=False, node_size=20)
 	nx.draw_networkx_edges(network, pos=pos)
+	plt.axis('off')
 	
 	if output:
 		plt.savefig(output)
