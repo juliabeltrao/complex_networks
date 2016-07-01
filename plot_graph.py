@@ -29,16 +29,17 @@ def plot_graph(network, output):
 	plt.plot(x, x, 'k--')
 
 	# plotting oracle x greedy
-	plt.xlabel("oracle distance")
-	plt.ylabel("greedy distance")
+	plt.xlabel("Oracle distance")
+	plt.ylabel("Greedy distance")
 	plt.plot(oracle_dist, greedy_dist, 'b.')
 	plt.axis([0, xymax, 0, xymax])
 
 	n_bins = 20
 	bin_centers, _, _ = binned_statistic(np.array(oracle_dist), np.array(oracle_dist), statistic='mean', bins=n_bins)
 	bin_averages, _, _ = binned_statistic(np.array(oracle_dist), np.array(greedy_dist), statistic='mean', bins=n_bins)
-	#bin_stdevs, _, _ = binned_statistic(np.array(oracle_dist), np.array(greedy_dist), statistic='std', bins=n_bins)
-	plt.plot(bin_centers, bin_averages, 'ro', ls='solid')
+	bin_stdevs, _, _ = binned_statistic(np.array(oracle_dist), np.array(greedy_dist), statistic='std', bins=n_bins)
+	#plt.plot(bin_centers, bin_averages, yerr=bin_stdevs, color='red', marker='o', ls='solid')
+	plt.errorbar(bin_centers, bin_averages, bin_stdevs, color='red', marker='o', ls='solid')
 
 	if output:
 		plt.savefig(output)
@@ -47,7 +48,7 @@ def plot_graph(network, output):
 		
 	plt.close()
 
-	return (bin_centers, bin_averages)
+	return (bin_centers, bin_averages, bin_stdevs)
 
 def collect_data(network):
 
@@ -92,7 +93,7 @@ def generate_pairs(G):
 	N = G.number_of_nodes()
 	i=0
 
-	while i < N/2:
+	while i < N:
 		s = rd.randrange(0, N-1)
 		t = rd.randrange(0, N-1)
 		#while (s == t or not nx.has_path(G, G.nodes()[s], G.nodes()[t])):
