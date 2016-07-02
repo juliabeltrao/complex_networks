@@ -18,14 +18,14 @@ def combined_graph(data_dict):
 		e = v[2]
 
 		xlocalmin.append(min(x))
-		ylocalmin.append(min(e))
+		ylocalmin.append(min(y))
 		xlocalmax.append(max(x))
-		ylocalmax.append(max(e))
+		ylocalmax.append(max(y))
 		#ylocalmax.append(max(max(x), max(y), max(e)))
 
 		plot_info = name_dict[k]	
-		plt.errorbar(x, y, yerr=e, label=plot_info[0], color=plot_info[1], marker=plot_info[2], ls='solid')
-		plt.legend(loc='lower right')
+		#plt.errorbar(x, y, yerr=e, label=plot_info[0], color=plot_info[1], marker=plot_info[2], ls='solid')
+		plt.plot(x, y, label=plot_info[0], color=plot_info[1], marker=plot_info[2], ls='solid')
 
 	# plotting identity line
 	xmin = math.ceil(min(xlocalmin))
@@ -33,11 +33,15 @@ def combined_graph(data_dict):
 	xmax = math.ceil(max(xlocalmax))
 	ymax = math.ceil(max(ylocalmax))
 	#xy = max(abs(xymin), xymax)
-	x = [0, xmax]
+	x = [0, xmax+10000]
 	plt.plot(x, x, 'k--')
-	#plt.axis([0, xmax, ymin, ymax])
+	plt.axis([0, xmax+10000, 0, ymax+10000])
+	plt.xlabel("Oracle distance (meters)")
+	plt.ylabel("Greedy distance (meters)")
+	plt.legend(loc='best')
 
-	plt.show()
+
+	plt.savefig('images/graphs/all_cities.pdf')
 
 combined_data = {}
 networks = ["des_moines_100.pickle", "budapest_100.pickle", "chicago_100.pickle", "helsinki_100.pickle", "rome_100.pickle", "san_francisco_100.pickle", "san_jose_100.pickle"]

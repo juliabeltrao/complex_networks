@@ -29,12 +29,12 @@ def plot_graph(network, output):
 	plt.plot(x, x, 'k--')
 
 	# plotting oracle x greedy
-	plt.xlabel("Oracle distance")
-	plt.ylabel("Greedy distance")
+	plt.xlabel("Oracle distance (meters)")
+	plt.ylabel("Greedy distance (meters)")
 	plt.plot(oracle_dist, greedy_dist, 'b.')
 	plt.axis([0, xymax, 0, xymax])
 
-	n_bins = 20
+	n_bins = 10
 	bin_centers, _, _ = binned_statistic(np.array(oracle_dist), np.array(oracle_dist), statistic='mean', bins=n_bins)
 	bin_averages, _, _ = binned_statistic(np.array(oracle_dist), np.array(greedy_dist), statistic='mean', bins=n_bins)
 	bin_stdevs, _, _ = binned_statistic(np.array(oracle_dist), np.array(greedy_dist), statistic='std', bins=n_bins)
